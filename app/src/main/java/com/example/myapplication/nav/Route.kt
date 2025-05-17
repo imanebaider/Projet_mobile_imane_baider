@@ -1,5 +1,6 @@
 package com.example.myapplication.nav
 
+
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -41,6 +42,8 @@ import com.example.myapplication.ui.theme.PinkDark
 import com.example.myapplication.ui.theme.PinkLight
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 
 
 object Routes {
@@ -147,8 +150,9 @@ fun HomeScreen(onNavigateToDetails: (String) -> Unit) {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        "Rüya – فناجين حالمة",
+                        "Rüya – فناجين ",
                         style = MaterialTheme.typography.titleLarge,
+                        fontStyle = FontStyle.Italic,
                         color = PinkDark
                     )
                 },
@@ -167,9 +171,6 @@ fun HomeScreen(onNavigateToDetails: (String) -> Unit) {
         ) {
 
 
-            item(span = { GridItemSpan(maxLineSpan) }) {
-                BannerInfo()
-            }
             // بانر
             item(span = { GridItemSpan(maxLineSpan) }) {
                 AsyncImage(
@@ -177,7 +178,7 @@ fun HomeScreen(onNavigateToDetails: (String) -> Unit) {
                     contentDescription = "Banner Rüya",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(180.dp)
+                        .height(250.dp)
                         .clip(RoundedCornerShape(20.dp))
                         .padding(bottom = 16.dp),
                     contentScale = ContentScale.Crop
@@ -210,8 +211,9 @@ fun RüyaFooter() {
     ) {
         // Logo & Slogan
         Text(
-            text = "Rüya – فناجين حالمة",
+            text = "Rüya – فناجين",
             style = MaterialTheme.typography.titleLarge,
+            fontStyle = FontStyle.Italic,
             color = PinkDark
         )
         Text(
@@ -317,42 +319,6 @@ fun SocialText(text: String) {
 
 
 
-@Composable
-fun BannerInfo() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Color(0xFFFDEEF8)) // لون وردي فاتح ناعم
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Dépensez 600Dhs pour la livraison gratuite",
-            style = MaterialTheme.typography.titleMedium,
-            color = PinkDark
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(24.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(text = "22 000 abonnés", style = MaterialTheme.typography.bodyMedium)
-            Text(text = "120 abonnés", style = MaterialTheme.typography.bodyMedium)
-        }
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(
-            text = "Buvez votre café avec de jolies tasses",
-            style = MaterialTheme.typography.titleSmall,
-            color = PinkDark
-        )
-        Text(
-            text = "Découvrez les mugs",
-            style = MaterialTheme.typography.bodyMedium,
-            color = PinkDark,
-            modifier = Modifier.padding(top = 4.dp)
-        )
-    }
-}
 
 @Composable
 fun DetailsScreen(productId: String) {
