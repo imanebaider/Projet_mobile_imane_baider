@@ -2,6 +2,7 @@ package com.example.myapplication.nav
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -20,16 +21,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import coil.compose.AsyncImage
-import com.example.myapplication.Product
+import com.example.myapplication.data.Entities.Product
 import com.example.myapplication.ProductItem
 import com.example.myapplication.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
@@ -38,16 +37,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import com.example.myapplication.ui.theme.PinkDark
 import com.example.myapplication.ui.theme.PinkLight
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.automirrored.filled.StarHalf
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.StarHalf
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 
 
 object Routes {
@@ -127,7 +127,6 @@ val products = listOf(
         imageResId = R.drawable.image8,
         description = "Le modèle emblématique de Rüya, où l’art rencontre l’authenticité" ,
         reviews = 5.0
-
     ),
     Product(
         id = "9",
@@ -136,7 +135,6 @@ val products = listOf(
         imageResId = R.drawable.image9,
         description = "Mystérieuse et artistique, cette tasse séduit les amateurs de beauté singulière",
         reviews = 5.0
-
     ),
 )
 
@@ -162,6 +160,11 @@ fun AppNavigation() {
 
         }
     }
+}
+
+@Composable
+fun DetailsScreen(productId: String, navController: NavHostController) {
+    TODO("Not yet implemented")
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -218,130 +221,6 @@ fun HomeScreen(onNavigateToDetails: (String) -> Unit) {
                 RüyaFooter()
             }
         }
-    }
-}
-
-
-
-
-
-
-
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DetailsScreen(productId: String, navController: NavController) {
-    val product = products.find { it.id == productId }
-
-    if (product == null) {
-        ErrorScreen(message = "Produit non trouvé")
-    } else {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(product.name) },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            navController.popBackStack()
-                        }) {
-                            Icon(Icons.Filled.ArrowBack, contentDescription = "Retour")
-                        }
-                    }
-                )
-            },
-            floatingActionButton = {
-                ExtendedFloatingActionButton(
-                    onClick = { /* Ajouter au panier */ },
-                    icon = { Icon(Icons.Filled.ShoppingCart, contentDescription = "Panier") },
-                    text = { Text("Ajouter - ${product.price}€") },
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .background(Color(0xFFFFE4E1)) // خلفية وردية
-                    .padding(16.dp)
-            ) {
-                AsyncImage(
-                    model = product.imageResId,
-                    contentDescription = product.name,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(300.dp)
-                        .clip(RoundedCornerShape(16.dp)),
-                    contentScale = ContentScale.Crop
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = product.name,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    RatingStars(rating = product.rating)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = "(${product.reviews} avis)", style = MaterialTheme.typography.bodySmall)
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = "${product.price}€",
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.primary
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = product.description,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun RatingStars(rating: Float, modifier: Modifier = Modifier) {
-    Row(modifier = modifier) {
-        val fullStars = rating.toInt()
-        val hasHalfStar = (rating - fullStars) >= 0.5
-        val emptyStars = 5 - fullStars - if (hasHalfStar) 1 else 0
-
-        repeat(fullStars) {
-            Icon(Icons.Filled.Star, contentDescription = "Star", tint = Color(0xFFFFC107))
-        }
-        if (hasHalfStar) {
-            Icon(Icons.Filled.StarHalf, contentDescription = "Half Star", tint = Color(0xFFFFC107))
-        }
-        repeat(emptyStars) {
-            Icon(Icons.Filled.StarBorder, contentDescription = "Empty Star", tint = Color(0xFFFFC107))
-        }
-    }
-}
-
-@Composable
-fun ErrorScreen(message: String) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = message,
-            color = Color.Red,
-            style = MaterialTheme.typography.bodyLarge
-        )
     }
 }
 
