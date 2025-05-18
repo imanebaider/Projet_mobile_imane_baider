@@ -8,6 +8,6 @@ data class Product(
     val description: String,
     val rating: Float = 0f,
     val brand: String = "",
-    val discount: Int = 0
-
+    val discount: Int = 0,
+    val reviews: Double
 )

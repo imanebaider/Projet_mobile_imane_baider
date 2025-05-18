@@ -1,27 +1,14 @@
 package com.example.myapplication.nav
 
-
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,20 +23,122 @@ import coil.compose.AsyncImage
 import com.example.myapplication.Product
 import com.example.myapplication.ProductItem
 import com.example.myapplication.R
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
-import com.example.myapplication.ui.theme.PinkDark
-import com.example.myapplication.ui.theme.PinkLight
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import com.example.myapplication.ui.theme.PinkDark
+import com.example.myapplication.ui.theme.PinkLight
+
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.automirrored.filled.StarHalf
+import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material.icons.filled.StarHalf
+import androidx.navigation.NavController
 
 
 object Routes {
     const val Home = "home"
     const val ProductDetails = "productDetails"
 }
+
+// 1. products معرف خارج أي كومبوزابل (global)
+val products = listOf(
+    Product(
+        id = "1",
+        name = "Fajr",
+        price = 19.99,
+        imageResId = R.drawable.image1,
+        description = "Une tasse inspirée par la sérénité de l’aube, symbole d’un nouveau départ" ,
+        reviews = 5.0
+
+    ),
+    Product(
+        id = "2",
+        name = "Noor",
+        price = 22.50,
+        imageResId = R.drawable.image2,
+        description = "Élégante et lumineuse, cette tasse dorée apporte chaleur à chaque instant café",
+        reviews = 5.0
+
+    ),
+    Product(
+        id = "3",
+        name = "Layali",
+        price = 25.00,
+        imageResId = R.drawable.image3,
+        description = "Un hommage aux nuits orientales, parfaite pour les moments calmes et profonds",
+        reviews = 5.0
+
+    ),
+    Product(
+        id = "4",
+        name = "Sama",
+        price = 21.75,
+        imageResId = R.drawable.image4,
+        description = "Un design céleste aux nuances bleues, pour s’évader à chaque gorgée" ,
+        reviews = 5.0
+
+    ),
+    Product(
+        id = "5",
+        name = "Rimal",
+        price = 18.90,
+        imageResId = R.drawable.image5,
+        description = "Inspirée des dunes dorées, cette tasse incarne la beauté du désert" ,
+        reviews = 5.0
+
+    ),
+    Product(
+        id = "6",
+        name = "Andalous",
+        price = 29.90,
+        imageResId = R.drawable.image6,
+        description = "Un style raffiné aux motifs andalous, alliant histoire et élégance" ,
+        reviews = 5.0
+
+    ),
+    Product(
+        id = "7",
+        name = "Haneen",
+        price = 24.60,
+        imageResId = R.drawable.image7,
+        description = "Délicate et nostalgique, elle évoque la douceur des souvenirs" ,
+        reviews = 5.0
+
+    ),
+    Product(
+        id = "8",
+        name = "Rüya Classique",
+        price = 27.00,
+        imageResId = R.drawable.image8,
+        description = "Le modèle emblématique de Rüya, où l’art rencontre l’authenticité" ,
+        reviews = 5.0
+
+    ),
+    Product(
+        id = "9",
+        name = "Asrar",
+        price = 23.40,
+        imageResId = R.drawable.image9,
+        description = "Mystérieuse et artistique, cette tasse séduit les amateurs de beauté singulière",
+        reviews = 5.0
+
+    ),
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,7 +158,8 @@ fun AppNavigation() {
             arguments = listOf(navArgument("productId") { type = NavType.StringType })
         ) { backStackEntry ->
             val productId = backStackEntry.arguments?.getString("productId") ?: ""
-            DetailsScreen(productId = productId)
+            DetailsScreen(productId = productId, navController = navController)
+
         }
     }
 }
@@ -77,73 +167,6 @@ fun AppNavigation() {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(onNavigateToDetails: (String) -> Unit) {
-    val products = listOf(
-        Product(
-            id = "1",
-            name = "Fajr",
-            price = 19.99,
-            imageResId = R.drawable.image1,
-            description = "Une tasse inspirée par la sérénité de l’aube, symbole d’un nouveau départ"
-        ),
-        Product(
-            id = "2",
-            name = "Noor",
-            price = 22.50,
-            imageResId = R.drawable.image2,
-            description = "Élégante et lumineuse, cette tasse dorée apporte chaleur à chaque instant café"
-        ),
-        Product(
-            id = "3",
-            name = "Layali",
-            price = 25.00,
-            imageResId = R.drawable.image3,
-            description = "Un hommage aux nuits orientales, parfaite pour les moments calmes et profonds"
-        ),
-        Product(
-            id = "4",
-            name = "Sama",
-            price = 21.75,
-            imageResId = R.drawable.image4,
-            description = "Un design céleste aux nuances bleues, pour s’évader à chaque gorgée"
-        ),
-        Product(
-            id = "5",
-            name = "Rimal",
-            price = 18.90,
-            imageResId = R.drawable.image5,
-            description = "Inspirée des dunes dorées, cette tasse incarne la beauté du désert"
-        ),
-        Product(
-            id = "6",
-            name = "Andalous",
-            price = 29.90,
-            imageResId = R.drawable.image6,
-            description = "Un style raffiné aux motifs andalous, alliant histoire et élégance"
-        ),
-        Product(
-            id = "7",
-            name = "Haneen",
-            price = 24.60,
-            imageResId = R.drawable.image7,
-            description = "Délicate et nostalgique, elle évoque la douceur des souvenirs"
-        ),
-        Product(
-            id = "8",
-            name = "Rüya Classique",
-            price = 27.00,
-            imageResId = R.drawable.image8,
-            description = "Le modèle emblématique de Rüya, où l’art rencontre l’authenticité"
-        ),
-        Product(
-            id = "9",
-            name = "Asrar",
-            price = 23.40,
-            imageResId = R.drawable.image9,
-            description = "Mystérieuse et artistique, cette tasse séduit les amateurs de beauté singulière"
-        ),
-
-    )
-
     Scaffold(
         containerColor = PinkLight,
         topBar = {
@@ -169,8 +192,6 @@ fun HomeScreen(onNavigateToDetails: (String) -> Unit) {
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-
-
             // بانر
             item(span = { GridItemSpan(maxLineSpan) }) {
                 AsyncImage(
@@ -192,13 +213,149 @@ fun HomeScreen(onNavigateToDetails: (String) -> Unit) {
                     onClick = { onNavigateToDetails(product.id) }
                 )
             }
+
             item(span = { GridItemSpan(maxLineSpan) }) {
                 RüyaFooter()
             }
         }
-
     }
 }
+
+
+
+
+
+
+
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailsScreen(productId: String, navController: NavController) {
+    val product = products.find { it.id == productId }
+
+    if (product == null) {
+        ErrorScreen(message = "Produit non trouvé")
+    } else {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(product.name) },
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            navController.popBackStack()
+                        }) {
+                            Icon(Icons.Filled.ArrowBack, contentDescription = "Retour")
+                        }
+                    }
+                )
+            },
+            floatingActionButton = {
+                ExtendedFloatingActionButton(
+                    onClick = { /* Ajouter au panier */ },
+                    icon = { Icon(Icons.Filled.ShoppingCart, contentDescription = "Panier") },
+                    text = { Text("Ajouter - ${product.price}€") },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+        ) { padding ->
+            Column(
+                modifier = Modifier
+                    .padding(padding)
+                    .verticalScroll(rememberScrollState())
+                    .background(Color(0xFFFFE4E1)) // خلفية وردية
+                    .padding(16.dp)
+            ) {
+                AsyncImage(
+                    model = product.imageResId,
+                    contentDescription = product.name,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                        .clip(RoundedCornerShape(16.dp)),
+                    contentScale = ContentScale.Crop
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = product.name,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    RatingStars(rating = product.rating)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = "(${product.reviews} avis)", style = MaterialTheme.typography.bodySmall)
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "${product.price}€",
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = product.description,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun RatingStars(rating: Float, modifier: Modifier = Modifier) {
+    Row(modifier = modifier) {
+        val fullStars = rating.toInt()
+        val hasHalfStar = (rating - fullStars) >= 0.5
+        val emptyStars = 5 - fullStars - if (hasHalfStar) 1 else 0
+
+        repeat(fullStars) {
+            Icon(Icons.Filled.Star, contentDescription = "Star", tint = Color(0xFFFFC107))
+        }
+        if (hasHalfStar) {
+            Icon(Icons.Filled.StarHalf, contentDescription = "Half Star", tint = Color(0xFFFFC107))
+        }
+        repeat(emptyStars) {
+            Icon(Icons.Filled.StarBorder, contentDescription = "Empty Star", tint = Color(0xFFFFC107))
+        }
+    }
+}
+
+@Composable
+fun ErrorScreen(message: String) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = message,
+            color = Color.Red,
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @Composable
@@ -286,12 +443,8 @@ fun RüyaFooter() {
                     color = PinkDark
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    SocialText("🌸 Pinterest")
-                }
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    SocialText("📸 Instagram")
-                }
+                Text("🌸 Pinterest")
+                Text("📸 Instagram")
             }
         }
 
@@ -306,23 +459,3 @@ fun RüyaFooter() {
         )
     }
 }
-
-@Composable
-fun SocialText(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.primary
-    )
-}
-
-
-
-
-
-@Composable
-fun DetailsScreen(productId: String) {
-    Text("Details of product ID: $productId")
-}
-
-

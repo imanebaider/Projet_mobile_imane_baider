@@ -59,6 +59,13 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
+
+    // Pour le pager horizontal
+    implementation ("com.google.accompanist:accompanist-pager:0.28.0")
+// Pour les images
+    implementation ("io.coil-kt:coil-compose:2.2.2")
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
