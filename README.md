@@ -20,3 +20,5 @@ Ce dépôt contient l'application mobile Rüya, développée en Kotlin avec Jetp
 Voici un aperçu de l'application Rüya :
 
 ![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya.PNG?raw=true)
+
+![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya2.PNG?raw=true)
