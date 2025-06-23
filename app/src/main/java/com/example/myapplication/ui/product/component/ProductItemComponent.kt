@@ -1,4 +1,6 @@
 package com.example.myapplication.ui.product.components
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ShoppingCart
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,11 +19,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.myapplication.data.Entities.Product
-
 @Composable
 fun ProductItem(
     product: Product,
     onClick: () -> Unit,
+    onAddToCart: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -33,7 +35,7 @@ fun ProductItem(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFFCE4EC) // وردي فاتح وناعم
+            containerColor = Color(0xFFFCE4EC)
         )
     ) {
         Column(
@@ -69,7 +71,7 @@ fun ProductItem(
                 text = product.name,
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = Color(0xFF6A1B9A) // بنفسجي غني
+                    color = Color(0xFF6A1B9A)
                 ),
                 maxLines = 1
             )
@@ -80,9 +82,23 @@ fun ProductItem(
                 text = "€${product.price}",
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.SemiBold,
-                    color = Color(0xFFD81B60) // وردي غامق جذاب
+                    color = Color(0xFFD81B60)
                 )
             )
+
+            IconButton(
+                onClick = onAddToCart,
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .size(36.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Ajouter au panier",
+                    tint = Color(0xFF6A1B9A)
+                )
+            }
         }
     }
 }
+

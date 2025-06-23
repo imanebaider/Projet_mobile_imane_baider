@@ -1,51 +1,38 @@
 package com.example.myapplication.nav
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontStyle
-import com.example.myapplication.ui.theme.PinkDark
-import com.example.emtyapp.ui.product.details.DetailsScreen
-import com.example.myapplication.ui.product.screens.HomeScreen
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.ui.product.ProductViewModel
-
+import com.example.myapplication.ui.product.details.DetailsScreen
+import com.example.myapplication.ui.product.screens.HomeScreen
+import com.example.myapplication.ui.product.screens.MonPanierScreen
 
 object Routes {
     const val Home = "home"
     const val ProductDetails = "productDetails"
+    const val Cart = "cart"
+    // مثلا تضيف هنا باقي المسارات إذا لزم الأمر
 }
-
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-
-    // إنشاء ViewModel مشترك
     val viewModel: ProductViewModel = viewModel()
 
-    NavHost(
-        navController = navController,
-        startDestination = Routes.Home
-    ) {
+    NavHost(navController = navController, startDestination = Routes.Home) {
         composable(Routes.Home) {
             HomeScreen(
                 viewModel = viewModel,
-                onNavigateToDetails = { id ->
-                    navController.navigate("${Routes.ProductDetails}/$id")
-                }
+                onNavigateToDetails = { id -> navController.navigate("${Routes.ProductDetails}/$id") },
+                onNavigateToCart = { navController.navigate(Routes.Cart) },
+                onNavigateToProfile = { /* navController.navigate("profile") */ },
+                onNavigateToOrders = { /* navController.navigate("orders") */ },
+                onNavigateToFavorites = { /* navController.navigate("favorites") */ },
+                onNavigateToLogin = { /* navController.navigate("login") */ }
             )
         }
 
@@ -61,20 +48,12 @@ fun AppNavigation() {
                 viewModel = viewModel
             )
         }
+
+        composable(Routes.Cart) {
+            MonPanierScreen(
+                onBack = { navController.popBackStack() },
+                onProductClick = { productId -> navController.navigate("${Routes.ProductDetails}/$productId") }
+            )
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
