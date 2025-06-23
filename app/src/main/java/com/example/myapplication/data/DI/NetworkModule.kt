@@ -17,7 +17,9 @@ import javax.inject.Singleton
 object NetworkModule {
 
     @Provides
-    fun provideBaseUrl(): String = "https://api.example.com/"
+    fun provideBaseUrl(): String = "https://raw.githubusercontent.com/imanebaider/Projet_mobile_imane_baider/main/app/public/products-api/"
+
+
 
     @Provides
     @Singleton

@@ -58,7 +58,7 @@ fun DetailsScreen(
                     .padding(16.dp)
             ) {
                 AsyncImage(
-                    model = product.imageResId,
+                    model = product.imageUrl,
                     contentDescription = product.name,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -76,7 +76,8 @@ fun DetailsScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(vertical = 8.dp)
                 ) {
-                    RatingStars(rating = product.rating)
+                    RatingStars(rating = product.reviews.toFloat())
+
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("(${product.reviews} reviews)")
                 }

@@ -3,31 +3,21 @@ package com.example.myapplication.data.Entities
 import com.google.gson.annotations.SerializedName
 
 data class Product(
-    @SerializedName("productID")
+    @SerializedName("id")
     val id: String,
 
-    @SerializedName("productName")
+    @SerializedName("name")
     val name: String,
 
-    @SerializedName("productPrice")
+    @SerializedName("price")
     val price: Double,
 
-    // لاحظ أن imageResId فالعادة ما كيتكونش ف API، غالبا كيكون رابط صورة
     @SerializedName("imageUrl")
     val imageUrl: String,
 
-    @SerializedName("productDescription")
+    @SerializedName("description")
     val description: String,
 
-    @SerializedName("productRating")
-    val rating: Float = 0f,
-
-    @SerializedName("productBrand")
-    val brand: String = "",
-
-    @SerializedName("productDiscount")
-    val discount: Int = 0,
-
-    @SerializedName("productReviews")
+    @SerializedName("reviews")
     val reviews: Double
 )

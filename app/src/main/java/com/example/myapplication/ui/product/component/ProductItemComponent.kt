@@ -55,7 +55,7 @@ fun ProductItem(
                     .padding(6.dp)
             ) {
                 AsyncImage(
-                    model = product.imageResId,
+                    model = product.imageUrl,
                     contentDescription = product.name,
                     modifier = Modifier
                         .fillMaxSize()

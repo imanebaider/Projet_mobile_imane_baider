@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import android.util.Log
+
 
 
 @HiltViewModel
@@ -36,10 +38,16 @@ class ProductViewModel @Inject constructor(
     private suspend fun loadProducts() {
         _state.value = ProductState.Loading
         try {
+            Log.d("products repo", "loadProducts")
+
+
             val products = repository.getProducts()
-            productsCache = products // <-- هنا كيتم التخزين
+            productsCache = products
             _state.value = ProductState.Success(products)
         } catch (e: Exception) {
+            Log.d("products repo", "Exception")
+
+
             _state.value = ProductState.Error(e.message ?: "Error fetching products")
         }
     }

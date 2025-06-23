@@ -3,7 +3,7 @@
     "id": "1",
     "name": "Fajr",
     "price": 19.99,
-    "imageUrl": "image1.png",
+    "imageUrl": "https://nissu.ma/wp-content/uploads/2025/04/20250416_160229-600x600.jpg",
     "description": "Une tasse inspirée par la sérénité de l’aube, symbole d’un nouveau départ",
     "reviews": 5.0
   },
@@ -11,7 +11,7 @@
     "id": "2",
     "name": "Noor",
     "price": 22.50,
-    "imageUrl": "image2.png",
+    "imageUrl": "https://nissu.ma/wp-content/uploads/2025/04/20250405_145053-600x600.jpg",
     "description": "Élégante et lumineuse, cette tasse dorée apporte chaleur à chaque instant café",
     "reviews": 5.0
   },
@@ -19,7 +19,7 @@
     "id": "3",
     "name": "Layali",
     "price": 25.00,
-    "imageUrl": "image3.png",
+    "imageUrl": "https://nissu.ma/wp-content/uploads/2025/04/20250409_111645-600x600.jpg",
     "description": "Un hommage aux nuits orientales, parfaite pour les moments calmes et profonds",
     "reviews": 5.0
   },
@@ -27,7 +27,7 @@
     "id": "4",
     "name": "Sama",
     "price": 21.75,
-    "imageUrl": "image4.png",
+    "imageUrl": "https://nissu.ma/wp-content/uploads/2025/04/20250406_183413-600x600.jpg",
     "description": "Un design céleste aux nuances bleues, pour s’évader à chaque gorgée",
     "reviews": 5.0
   },
@@ -35,7 +35,7 @@
     "id": "5",
     "name": "Rimal",
     "price": 18.90,
-    "imageUrl": "image5.png",
+    "imageUrl": "https://nissu.ma/wp-content/uploads/2025/04/20250409_121248-600x600.jpg",
     "description": "Inspirée des dunes dorées, cette tasse incarne la beauté du désert",
     "reviews": 5.0
   },
@@ -43,7 +43,7 @@
     "id": "6",
     "name": "Andalous",
     "price": 29.90,
-    "imageUrl": "image6.png",
+    "imageUrl": "https://nissu.ma/wp-content/uploads/2025/04/20250416_161127-600x600.jpg",
     "description": "Un style raffiné aux motifs andalous, alliant histoire et élégance",
     "reviews": 5.0
   },
@@ -51,7 +51,7 @@
     "id": "7",
     "name": "Haneen",
     "price": 24.60,
-    "imageUrl": "image7.png",
+    "imageUrl": "https://nissu.ma/wp-content/uploads/2025/04/20250407_191041-600x600.jpg",
     "description": "Délicate et nostalgique, elle évoque la douceur des souvenirs",
     "reviews": 5.0
   },
@@ -59,7 +59,7 @@
     "id": "8",
     "name": "Rüya Classique",
     "price": 27.00,
-    "imageUrl": "image8.png",
+    "imageUrl": "https://nissu.ma/wp-content/uploads/2025/04/20250405_171808-600x600.jpg",
     "description": "Le modèle emblématique de Rüya, où l’art rencontre l’authenticité",
     "reviews": 5.0
   },
@@ -67,7 +67,7 @@
     "id": "9",
     "name": "Asrar",
     "price": 23.40,
-    "imageUrl": "image9.png",
+    "imageUrl": "https://nissu.ma/wp-content/uploads/2025/04/20250407_181614-600x600.jpg",
     "description": "Mystérieuse et artistique, cette tasse séduit les amateurs de beauté singulière",
     "reviews": 5.0
   }

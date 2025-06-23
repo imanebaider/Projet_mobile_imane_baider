@@ -7,6 +7,10 @@ import com.example.myapplication.R
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 import com.example.myapplication.data.Api.ProductApi
+import android.util.Log
+import java.io.Console
+
+
 
 
 
@@ -16,6 +20,8 @@ class ProductRepository @Inject constructor(
 
     suspend fun getProducts(): List<Product> {
         // fetch data from a remote serverAdd commentMore actions
-        return api.getProducts()
+        val products = api.getProducts()
+                Log.d("products repo", "size :"+ products.size)
+        return products
     }
 }
