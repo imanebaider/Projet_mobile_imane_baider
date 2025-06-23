@@ -45,6 +45,13 @@ android {
 }
 
 dependencies {
+    // RetrofitAdd commentMore actions
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+
+    // OkHttp pour logging
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+
 
     implementation(libs.dagger.hilt)
     ksp(libs.dagger.hilt.compiler)

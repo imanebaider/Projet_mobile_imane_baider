@@ -35,7 +35,7 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
             AsyncImage(
-                model = product.imageResId,
+                model = product.imageUrl,
                 contentDescription = product.name,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -43,6 +43,7 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
                     .clip(RoundedCornerShape(12.dp)),
                 contentScale = ContentScale.Crop
             )
+
             Text(
                 text = product.name,
                 style = MaterialTheme.typography.titleMedium,
