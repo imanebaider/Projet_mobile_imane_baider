@@ -8,14 +8,19 @@ import com.example.myapplication.viewmodel.ProductState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ProductViewModel(
-    private val repository: ProductRepository = ProductRepository()
+
+@HiltViewModel
+class ProductViewModel @Inject constructor(
+
+    private val repository: ProductRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<ProductState>(ProductState.Loading)
     val state: StateFlow<ProductState> = _state
-    private var productsCache: List<Product> = emptyList()
+
 
     init {
         loadInitialProducts()
@@ -26,6 +31,7 @@ class ProductViewModel(
             loadProducts()
         }
     }
+    private var productsCache: List<Product> = emptyList()
 
     private suspend fun loadProducts() {
         _state.value = ProductState.Loading

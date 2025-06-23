@@ -5,11 +5,14 @@ package com.example.myapplication.data.Repository
 import com.example.myapplication.data.Entities.Product
 import com.example.myapplication.R
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
-class ProductRepository {
+
+class ProductRepository @Inject constructor() {
+
 
     suspend fun getProducts(): List<Product> {
-        delay(2000) // Simulate network or database delay
+        delay(2000) //  Simulate network or database delay
 
         return listOf(
             Product(
