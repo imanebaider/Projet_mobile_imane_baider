@@ -15,6 +15,7 @@ class ProductViewModel(
 
     private val _state = MutableStateFlow<ProductState>(ProductState.Loading)
     val state: StateFlow<ProductState> = _state
+    private var productsCache: List<Product> = emptyList()
 
     init {
         loadInitialProducts()
@@ -30,20 +31,18 @@ class ProductViewModel(
         _state.value = ProductState.Loading
         try {
             val products = repository.getProducts()
+            productsCache = products // <-- هنا كيتم التخزين
             _state.value = ProductState.Success(products)
         } catch (e: Exception) {
             _state.value = ProductState.Error(e.message ?: "Error fetching products")
         }
     }
 
+
     fun getProduct(productId: String): Product? {
-        val currentState = state.value
-        return if (currentState is ProductState.Success) {
-            currentState.products.find { it.id == productId }
-        } else {
-            null
-        }
+        return productsCache.find { it.id == productId }
     }
+
 
     fun handleIntent(intent: ProductIntent) {
         when (intent) {

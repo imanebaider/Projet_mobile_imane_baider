@@ -20,9 +20,23 @@ import com.example.myapplication.ui.product.ProductViewModel
 fun DetailsScreen(
     productId: String,
     navController: NavController,
-    viewModel: ProductViewModel = viewModel()
+    viewModel: ProductViewModel
 ) {
     val product = viewModel.getProduct(productId)
+
+    println("🔎 productId reçu: '$productId'")
+    println("📦 Liste des produits dans cache:")
+    viewModel.state.value.let { state ->
+        if (state is com.example.myapplication.viewmodel.ProductState.Success) {
+            state.products.forEach {
+                println("🆔 Produit: id='${it.id}', name='${it.name}'")
+            }
+        } else {
+            println("⚠️ Le state n'est pas Success: $state")
+        }
+    }
+    println("🧪 Produit trouvé: ${product?.name}")
+
 
     Scaffold(
         topBar = {
@@ -85,9 +99,17 @@ fun DetailsScreen(
 }
 
 @Composable
-fun ErrorScreen(x0: String) {
-    TODO("Not yet implemented")
+fun ErrorScreen(message: String) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = message, color = MaterialTheme.colorScheme.error)
+    }
 }
+
 
 
 @Composable

@@ -19,6 +19,8 @@ import androidx.compose.ui.text.font.FontStyle
 import com.example.myapplication.ui.theme.PinkDark
 import com.example.emtyapp.ui.product.details.DetailsScreen
 import com.example.myapplication.ui.product.screens.HomeScreen
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.myapplication.ui.product.ProductViewModel
 
 
 object Routes {
@@ -27,29 +29,36 @@ object Routes {
 }
 
 
-
-
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+
+    // إنشاء ViewModel مشترك
+    val viewModel: ProductViewModel = viewModel()
 
     NavHost(
         navController = navController,
         startDestination = Routes.Home
     ) {
         composable(Routes.Home) {
-            HomeScreen(onNavigateToDetails = { id ->
-                navController.navigate("${Routes.ProductDetails}/$id")
-            })
+            HomeScreen(
+                viewModel = viewModel,
+                onNavigateToDetails = { id ->
+                    navController.navigate("${Routes.ProductDetails}/$id")
+                }
+            )
         }
 
         composable(
             "${Routes.ProductDetails}/{productId}",
-            arguments = listOf(navArgument("productId") { type = androidx.navigation.NavType.StringType })
+            arguments = listOf(navArgument("productId") {
+                type = androidx.navigation.NavType.StringType
+            })
         ) { backStackEntry ->
             DetailsScreen(
                 productId = backStackEntry.arguments?.getString("productId") ?: "",
-                navController = navController
+                navController = navController,
+                viewModel = viewModel
             )
         }
     }
@@ -69,105 +78,3 @@ fun AppNavigation() {
 
 
 
-
-@Composable
-fun RüyaFooter() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Color(0xFFF5F5F5))
-            .padding(vertical = 32.dp, horizontal = 20.dp)
-    ) {
-        // Logo & Slogan
-        Text(
-            text = "Rüya – فناجين",
-            style = MaterialTheme.typography.titleLarge,
-            fontStyle = FontStyle.Italic,
-            color = PinkDark
-        )
-        Text(
-            text = "Chaque tasse est une nouvelle rêverie.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(top = 4.dp)
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Newsletter
-        Text(
-            text = "🌸 Ne manquez rien !",
-            style = MaterialTheme.typography.titleMedium,
-            color = PinkDark
-        )
-        Text(
-            text = "Abonnez-vous à notre newsletter pour découvrir nos nouvelles collections.",
-            style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.padding(top = 4.dp)
-        )
-        OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            label = { Text("Votre e-mail") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp)
-                .clip(RoundedCornerShape(8.dp))
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        // Sections (Services / Entreprise / Contact)
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column {
-                Text(
-                    text = "Services",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = PinkDark
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text("À propos de nous")
-                Text("Livraison")
-                Text("Confidentialité")
-                Text("Conditions")
-            }
-
-            Column {
-                Text(
-                    text = "Entreprise",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = PinkDark
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text("LARACHE")
-                Text("Magasin Rüya")
-                Text("0612225554")
-                Text("Contact@Rüya.ma")
-            }
-
-            Column {
-                Text(
-                    text = "Réseaux",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = PinkDark
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text("🌸 Pinterest")
-                Text("📸 Instagram")
-            }
-        }
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        // Copyright
-        Text(
-            text = "© 2025 Rüya – Tous droits réservés.",
-            style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-    }
-}

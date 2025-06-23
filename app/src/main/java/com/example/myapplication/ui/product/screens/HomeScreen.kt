@@ -29,7 +29,7 @@ import com.example.myapplication.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: ProductViewModel = viewModel(),
+    viewModel: ProductViewModel,
     onNavigateToDetails: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
@@ -90,7 +90,6 @@ fun HomeScreen(
 
         }
     }
-    Footer()
 }
 
 @Composable
@@ -152,105 +151,6 @@ fun CenteredTitle() {
                 fontWeight = FontWeight.SemiBold,
                 color = Color(0xFF6A1B9A) // بنفسجي معتدل أنيق
             )
-        )
-    }
-}
-
-@Composable
-
-fun Footer() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFFDC7399)) // موف فاتح
-            .padding(20.dp)
-    ) {
-        // Newsletter section
-        Text(
-            text = "Don’t miss a thing",
-            color = Color(0xFFD890E8),
-            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-        )
-        Text(
-            text = "Enter your email to know about new collections & launches.",
-            color = Color(0xFFEB3BFA),
-            style = MaterialTheme.typography.bodySmall
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            placeholder = { Text("Your Email") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        // Links section
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column {
-                Text("Services", fontWeight = FontWeight.Bold, color = Color(0xFF4A148C))
-                Spacer(modifier = Modifier.height(6.dp))
-                Text("About Us", color = Color(0xFF6A1B9A))
-                Text("Delivery Info", color = Color(0xFF6A1B9A))
-                Text("Privacy Policy", color = Color(0xFF6A1B9A))
-            }
-
-            Column {
-                Text("Company", fontWeight = FontWeight.Bold, color = Color(0xFF4A148C))
-                Spacer(modifier = Modifier.height(6.dp))
-                Text("CASABLANCA Aïn Chock", color = Color(0xFF6A1B9A))
-                Text("Nissu Store", color = Color(0xFF6A1B9A))
-                Text("0769396755", color = Color(0xFF6A1B9A))
-                Text("Contact@nissu.ma", color = Color(0xFF6A1B9A))
-            }
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Follow Us", fontWeight = FontWeight.Bold, color = Color(0xFF4A148C))
-                Spacer(modifier = Modifier.height(6.dp))
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_facebook),
-                        contentDescription = "Facebook",
-                        tint = Color(0xFF4A148C),
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_instagram),
-                        contentDescription = "Instagram",
-                        tint = Color(0xFF4A148C),
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_tiktok),
-                        contentDescription = "TikTok",
-                        tint = Color(0xFF4A148C),
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Divider(color = Color(0xFFBA68C8))
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "© 2025 Nissu. All Rights Reserved.",
-            color = Color(0xFF4A148C),
-            style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
     }
 }
