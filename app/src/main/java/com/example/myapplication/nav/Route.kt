@@ -9,9 +9,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.product.ProductViewModel
 import com.example.myapplication.ui.product.details.DetailsScreen
 import com.example.myapplication.ui.product.screens.HomeScreen
+import com.example.myapplication.ui.product.screens.MesCommandesScreen
 import com.example.myapplication.ui.product.screens.MonPanierScreen
 import com.example.myapplication.ui.product.screens.ValidationCommandeScreen
 import com.example.myapplication.ui.product.screens.PaymentScreen // <-- ضروري
+import com.example.myapplication.ui.product.screens.FavoritesScreen
 
 object Routes {
     const val Home = "home"
@@ -19,6 +21,8 @@ object Routes {
     const val Cart = "cart"
     const val Validation = "validation" // 🆕
     const val Payment = "payment"
+    const val Orders = "orders"
+
 
 }
 
@@ -34,8 +38,8 @@ fun AppNavigation() {
                 onNavigateToDetails = { id -> navController.navigate("${Routes.ProductDetails}/$id") },
                 onNavigateToCart = { navController.navigate(Routes.Cart) },
                 onNavigateToProfile = { /* navController.navigate("profile") */ },
-                onNavigateToOrders = { /* navController.navigate("orders") */ },
-                onNavigateToFavorites = { /* navController.navigate("favorites") */ },
+                onNavigateToOrders = { navController.navigate(Routes.Orders) },
+                onNavigateToFavorites = { navController.navigate("favorites") },
                 onNavigateToLogin = { /* navController.navigate("login") */ }
             )
         }
@@ -79,6 +83,27 @@ fun AppNavigation() {
         composable(Routes.Payment) {
             PaymentScreen(onBack = { navController.popBackStack() })
         }
+
+        composable(Routes.Orders) {
+            MesCommandesScreen(
+                onBack = { navController.popBackStack() },
+                onProductClick = { productId ->
+                    navController.navigate("${Routes.ProductDetails}/$productId")
+                }
+            )
+        }
+
+        composable("favorites") {
+            FavoritesScreen(
+                onNavigateToDetails = { productId ->
+                    navController.navigate("productDetails/$productId")
+                },
+                onBack = {
+                    navController.popBackStack()  // ترجع للصفحة السابقة
+                }
+            )
+        }
+
 
 
 

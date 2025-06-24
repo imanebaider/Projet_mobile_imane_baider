@@ -1,6 +1,6 @@
 package com.example.myapplication.ui.product.screens
-import androidx.compose.foundation.clickable
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,9 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.myapplication.data.Entities.Order
+import com.example.myapplication.data.Entities.OrderItem
 import com.example.myapplication.data.Entities.Product
 import com.example.myapplication.utils.CartStorage
-
+import com.example.myapplication.utils.OrderStorage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,44 +58,55 @@ fun MonPanierScreen(
         bottomBar = {
             if (cartProducts.isNotEmpty()) {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("Total sélectionné: ${"%.2f".format(totalSelected)} DH",
+                    Text(
+                        "Total sélectionné: ${"%.2f".format(totalSelected)} DH",
                         style = MaterialTheme.typography.titleMedium,
-                        color = Color(0xFF880E4F))
+                        color = Color(0xFF880E4F)
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(
-                            onClick = {
-                                println("✅ Bouton CLIQUÉ")
-                                onPasserCommande()
-                            },
-                    // enabled = selectedProducts.isNotEmpty(), ❌ حيديه
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD81B60))
+                        onClick = {
+                            val orderItems = selectedProducts.map { id ->
+                                OrderItem(
+                                    productId = id,
+                                    quantity = quantities[id] ?: 1
+                                )
+                            }
+                            val order = Order(orderItems)
+                            OrderStorage.saveOrder(context, order)  // حفظ الطلب
+
+                            onPasserCommande() // تنفيذ العملية التالية (مثلاً التنقل)
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD81B60))
                     ) {
-                    Text("Passer la commande", color = Color.White)
-                }
-
-
+                        Text("Passer la commande", color = Color.White)
+                    }
                 }
             }
         }
     ) { paddingValues ->
         if (cartProducts.isEmpty()) {
             Box(
-                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
                 contentAlignment = Alignment.Center
             ) {
                 Text("Votre panier est vide", color = Color.Gray)
             }
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-
-                // ✅ "Tout sélectionner"
                 item {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -121,7 +134,7 @@ fun MonPanierScreen(
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { onProductClick(product.id) }, // ✅ التنقل للتفاصيل
+                            .clickable { onProductClick(product.id) },
                         elevation = CardDefaults.cardElevation(6.dp),
                         colors = CardDefaults.cardColors(containerColor = Color(0xFFF8BBD0))
                     ) {

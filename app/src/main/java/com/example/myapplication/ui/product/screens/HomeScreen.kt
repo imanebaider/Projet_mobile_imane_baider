@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.product.screens
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,14 +17,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.myapplication.R
 import com.example.myapplication.data.Entities.Product
 import com.example.myapplication.ui.product.ProductIntent
 import com.example.myapplication.ui.product.ProductViewModel
-import com.example.myapplication.ui.product.components.ProductItem
-import com.example.myapplication.ui.product.details.ErrorScreen
 import com.example.myapplication.utils.CartStorage
+import com.example.myapplication.utils.FavoriteStorage
 import com.example.myapplication.viewmodel.ProductState
 import kotlinx.coroutines.launch
 
@@ -43,7 +43,6 @@ fun HomeScreen(
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
-
     var searchQuery by remember { mutableStateOf("") }
 
     val filteredProducts = when (state) {
@@ -122,7 +121,6 @@ fun HomeScreen(
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
-
                 CenteredTitle()
 
                 when (state) {
@@ -137,7 +135,8 @@ fun HomeScreen(
                                 scope.launch {
                                     snackbarHostState.showSnackbar("${product.name} ajouté au panier")
                                 }
-                            }
+                            },
+                            context = context
                         )
                     }
                     is ProductState.Error -> {
@@ -153,79 +152,12 @@ fun HomeScreen(
 }
 
 @Composable
-fun CustomDrawerContent(
-    onCloseDrawer: () -> Unit,
-    onNavigateToProducts: () -> Unit,
-    onNavigateToCart: () -> Unit,
-    onNavigateToOrders: () -> Unit,
-    onNavigateToFavorites: () -> Unit,
-    onNavigateToProfile: () -> Unit,
-    onNavigateToLogin: () -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFFCE4EC))
-            .padding(vertical = 24.dp, horizontal = 16.dp)
-    ) {
-        Text(
-            text = "Rüya",
-            style = MaterialTheme.typography.titleLarge.copy(
-                color = Color(0xFF880E4F),
-                fontWeight = FontWeight.Bold
-            ),
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
-
-        DrawerMenuItem(icon = Icons.Default.Home, title = "Produits", onClick = onNavigateToProducts)
-        DrawerMenuItem(icon = Icons.Default.ShoppingCart, title = "Mon Panier", onClick = onNavigateToCart)
-        DrawerMenuItem(icon = Icons.Default.ListAlt, title = "Mes Commandes", onClick = onNavigateToOrders)
-        DrawerMenuItem(icon = Icons.Default.Favorite, title = "Mes Favoris", onClick = onNavigateToFavorites)
-        DrawerMenuItem(icon = Icons.Default.Person, title = "Mon Profil", onClick = onNavigateToProfile)
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        Divider(color = Color(0xFF880E4F).copy(alpha = 0.3f), thickness = 1.dp)
-
-        DrawerMenuItem(
-            icon = Icons.Default.Login,
-            title = "Se connecter",
-            onClick = onNavigateToLogin,
-            tint = Color(0xFFD81B60)
-        )
-    }
-}
-
-@Composable
-fun DrawerMenuItem(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    title: String,
-    onClick: () -> Unit,
-    tint: Color = Color(0xFF880E4F)
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(icon, contentDescription = title, tint = tint, modifier = Modifier.size(28.dp))
-        Spacer(modifier = Modifier.width(16.dp))
-        Text(
-            text = title,
-            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium),
-            color = tint
-        )
-    }
-}
-
-@Composable
 fun ProductGrid(
     products: List<Product>,
     modifier: Modifier = Modifier,
     onItemClick: (String) -> Unit,
-    onAddToCart: (Product) -> Unit
+    onAddToCart: (Product) -> Unit,
+    context: Context
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(160.dp),
@@ -233,11 +165,66 @@ fun ProductGrid(
         contentPadding = PaddingValues(16.dp)
     ) {
         items(products) { product ->
+            val isFavorite = remember { mutableStateOf(FavoriteStorage.isFavorite(context, product)) }
+
             ProductItem(
                 product = product,
+                isFavorite = isFavorite.value,
                 onClick = { onItemClick(product.id) },
-                onAddToCart = { onAddToCart(product) }
+                onAddToCart = { onAddToCart(product) },
+                onToggleFavorite = {
+                    FavoriteStorage.toggleFavorite(context, product)
+                    isFavorite.value = !isFavorite.value
+                }
             )
+        }
+    }
+}
+
+@Composable
+fun ProductItem(
+    product: Product,
+    isFavorite: Boolean,
+    onClick: () -> Unit,
+    onAddToCart: () -> Unit,
+    onToggleFavorite: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .clickable { onClick() },
+        elevation = CardDefaults.cardElevation(6.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFFCE4EC))
+    ) {
+        Column(modifier = Modifier.padding(8.dp)) {
+            AsyncImage(
+                model = product.imageUrl,
+                contentDescription = product.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(product.name, style = MaterialTheme.typography.titleMedium, color = Color(0xFF880E4F))
+            Text("${product.price} DH", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF6A1B9A))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = onAddToCart) {
+                    Icon(Icons.Default.AddShoppingCart, contentDescription = "Add to Cart", tint = Color(0xFF880E4F))
+                }
+                IconButton(onClick = onToggleFavorite) {
+                    Icon(
+                        imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "Toggle Favorite",
+                        tint = if (isFavorite) Color.Red else Color.Gray
+                    )
+                }
+            }
         }
     }
 }
@@ -280,6 +267,74 @@ fun CenteredTitle() {
                 fontWeight = FontWeight.SemiBold,
                 color = Color(0xFF6A1B9A)
             )
+        )
+    }
+}
+// كل الكود لي كتبتيه سابقًا هنا بدون تغيير...
+
+@Composable
+fun CustomDrawerContent(
+    onCloseDrawer: () -> Unit,
+    onNavigateToProducts: () -> Unit,
+    onNavigateToCart: () -> Unit,
+    onNavigateToOrders: () -> Unit,
+    onNavigateToFavorites: () -> Unit,
+    onNavigateToProfile: () -> Unit,
+    onNavigateToLogin: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFFCE4EC))
+            .padding(vertical = 24.dp, horizontal = 16.dp)
+    ) {
+        Text(
+            text = "Rüya",
+            style = MaterialTheme.typography.titleLarge.copy(
+                color = Color(0xFF880E4F),
+                fontWeight = FontWeight.Bold
+            ),
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
+
+        DrawerMenuItem(icon = Icons.Default.Home, title = "Produits", onClick = onNavigateToProducts)
+        DrawerMenuItem(icon = Icons.Default.ShoppingCart, title = "Mon Panier", onClick = onNavigateToCart)
+        DrawerMenuItem(icon = Icons.Default.ListAlt, title = "Mes Commandes", onClick = onNavigateToOrders)
+        DrawerMenuItem(icon = Icons.Default.Favorite, title = "Mes Favoris", onClick = onNavigateToFavorites)
+        DrawerMenuItem(icon = Icons.Default.Person, title = "Mon Profil", onClick = onNavigateToProfile)
+
+        Spacer(modifier = Modifier.weight(1f))
+        Divider(color = Color(0xFF880E4F).copy(alpha = 0.3f), thickness = 1.dp)
+
+        DrawerMenuItem(
+            icon = Icons.Default.Login,
+            title = "Se connecter",
+            onClick = onNavigateToLogin,
+            tint = Color(0xFFD81B60)
+        )
+    }
+}
+
+@Composable
+fun DrawerMenuItem(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    title: String,
+    onClick: () -> Unit,
+    tint: Color = Color(0xFF880E4F)
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+            .padding(vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(icon, contentDescription = title, tint = tint, modifier = Modifier.size(28.dp))
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium),
+            color = tint
         )
     }
 }
