@@ -60,27 +60,36 @@ fun HomeScreen(
         drawerState = drawerState,
         drawerContent = {
             CustomDrawerContent(
-                onCloseDrawer = { scope.launch { drawerState.close() } },
                 onNavigateToProducts = { scope.launch { drawerState.close() } },
                 onNavigateToCart = {
-                    scope.launch { drawerState.close() }
-                    onNavigateToCart()
+                    scope.launch {
+                        drawerState.close()
+                        onNavigateToCart()
+                    }
                 },
                 onNavigateToOrders = {
-                    scope.launch { drawerState.close() }
-                    onNavigateToOrders()
+                    scope.launch {
+                        drawerState.close()
+                        onNavigateToOrders()
+                    }
                 },
                 onNavigateToFavorites = {
-                    scope.launch { drawerState.close() }
-                    onNavigateToFavorites()
+                    scope.launch {
+                        drawerState.close()
+                        onNavigateToFavorites()
+                    }
                 },
                 onNavigateToProfile = {
-                    scope.launch { drawerState.close() }
-                    onNavigateToProfile()
+                    scope.launch {
+                        drawerState.close()
+                        onNavigateToProfile()
+                    }
                 },
                 onNavigateToLogin = {
-                    scope.launch { drawerState.close() }
-                    onNavigateToLogin()
+                    scope.launch {
+                        drawerState.close()
+                        onNavigateToLogin()
+                    }
                 }
             )
         }
@@ -270,17 +279,15 @@ fun CenteredTitle() {
         )
     }
 }
-// كل الكود لي كتبتيه سابقًا هنا بدون تغيير...
 
 @Composable
 fun CustomDrawerContent(
-    onCloseDrawer: () -> Unit,
     onNavigateToProducts: () -> Unit,
     onNavigateToCart: () -> Unit,
     onNavigateToOrders: () -> Unit,
     onNavigateToFavorites: () -> Unit,
     onNavigateToProfile: () -> Unit,
-    onNavigateToLogin: () -> Unit,
+    onNavigateToLogin: () -> Unit
 ) {
     Column(
         modifier = Modifier

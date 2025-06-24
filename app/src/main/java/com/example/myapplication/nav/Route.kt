@@ -14,6 +14,8 @@ import com.example.myapplication.ui.product.screens.MonPanierScreen
 import com.example.myapplication.ui.product.screens.ValidationCommandeScreen
 import com.example.myapplication.ui.product.screens.PaymentScreen // <-- ضروري
 import com.example.myapplication.ui.product.screens.FavoritesScreen
+import com.example.myapplication.ui.product.screens.AuthScreen
+import com.example.myapplication.ui.product.screens.SignUpScreen
 
 object Routes {
     const val Home = "home"
@@ -22,6 +24,8 @@ object Routes {
     const val Validation = "validation" // 🆕
     const val Payment = "payment"
     const val Orders = "orders"
+    const val Auth = "auth"
+    const val SignUp = "signup"
 
 
 }
@@ -40,7 +44,9 @@ fun AppNavigation() {
                 onNavigateToProfile = { /* navController.navigate("profile") */ },
                 onNavigateToOrders = { navController.navigate(Routes.Orders) },
                 onNavigateToFavorites = { navController.navigate("favorites") },
-                onNavigateToLogin = { /* navController.navigate("login") */ }
+                onNavigateToLogin = {
+                    navController.navigate(Routes.Auth)
+                }
             )
         }
 
@@ -104,6 +110,31 @@ fun AppNavigation() {
             )
         }
 
+        composable(Routes.Auth) {
+            AuthScreen(
+                onLoginSuccess = {
+                    navController.navigate(Routes.Home) {
+                        popUpTo(Routes.Auth) { inclusive = true }
+                    }
+                },
+                onNavigateToSignUp = {
+                    navController.navigate(Routes.SignUp)
+                }
+            )
+        }
+
+        composable(Routes.SignUp) {
+            SignUpScreen(
+                onSignUpSuccess = {
+                    navController.navigate(Routes.Auth) {
+                        popUpTo(Routes.SignUp) { inclusive = true }
+                    }
+                },
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
 
 
 
