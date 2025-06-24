@@ -19,11 +19,13 @@ import coil.compose.AsyncImage
 import com.example.myapplication.data.Entities.Product
 import com.example.myapplication.utils.CartStorage
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MonPanierScreen(
     onBack: () -> Unit,
-    onProductClick: (String) -> Unit  // ← هذا المتغير مسؤول عن التنقل لصفحة التفاصيل
+    onProductClick: (String) -> Unit,
+    onPasserCommande: () -> Unit
 ) {
     val context = LocalContext.current
     val cartProducts = remember { mutableStateListOf<Product>().apply { addAll(CartStorage.loadCart(context)) } }
@@ -62,12 +64,17 @@ fun MonPanierScreen(
                         color = Color(0xFF880E4F))
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(
-                        onClick = { /* logique de paiement */ },
-                        enabled = selectedProducts.isNotEmpty(),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD81B60))
+                            onClick = {
+                                println("✅ Bouton CLIQUÉ")
+                                onPasserCommande()
+                            },
+                    // enabled = selectedProducts.isNotEmpty(), ❌ حيديه
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD81B60))
                     ) {
-                        Text("Passer la commande", color = Color.White)
-                    }
+                    Text("Passer la commande", color = Color.White)
+                }
+
+
                 }
             }
         }

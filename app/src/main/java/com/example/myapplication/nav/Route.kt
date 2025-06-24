@@ -1,21 +1,25 @@
 package com.example.myapplication.nav
-
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.product.ProductViewModel
 import com.example.myapplication.ui.product.details.DetailsScreen
 import com.example.myapplication.ui.product.screens.HomeScreen
 import com.example.myapplication.ui.product.screens.MonPanierScreen
+import com.example.myapplication.ui.product.screens.ValidationCommandeScreen
+import com.example.myapplication.ui.product.screens.PaymentScreen // <-- ضروري
 
 object Routes {
     const val Home = "home"
     const val ProductDetails = "productDetails"
     const val Cart = "cart"
-    // مثلا تضيف هنا باقي المسارات إذا لزم الأمر
+    const val Validation = "validation" // 🆕
+    const val Payment = "payment"
+
 }
 
 @Composable
@@ -39,8 +43,9 @@ fun AppNavigation() {
         composable(
             "${Routes.ProductDetails}/{productId}",
             arguments = listOf(navArgument("productId") {
-                type = androidx.navigation.NavType.StringType
+                type = NavType.StringType
             })
+
         ) { backStackEntry ->
             DetailsScreen(
                 productId = backStackEntry.arguments?.getString("productId") ?: "",
@@ -49,11 +54,34 @@ fun AppNavigation() {
             )
         }
 
+
         composable(Routes.Cart) {
             MonPanierScreen(
                 onBack = { navController.popBackStack() },
-                onProductClick = { productId -> navController.navigate("${Routes.ProductDetails}/$productId") }
+                onProductClick = { productId ->
+                    navController.navigate("${Routes.ProductDetails}/$productId")
+                },
+                onPasserCommande = {
+                    navController.navigate(Routes.Validation)
+                }
+
             )
         }
+        composable(Routes.Validation) {
+            ValidationCommandeScreen(
+                onBack = { navController.popBackStack() },
+                onConfirmPayment = { clientInfo, paymentMethod ->
+                    navController.navigate(Routes.Payment)
+                }
+            )
+        }
+
+        composable(Routes.Payment) {
+            PaymentScreen(onBack = { navController.popBackStack() })
+        }
+
+
+
     }
 }
+
