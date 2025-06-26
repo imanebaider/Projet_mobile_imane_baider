@@ -74,20 +74,33 @@ J'ai utilisé l'architecture **MVI (Model-View-Intent)** pour assurer un **flux 
 ![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya2.PNG?raw=true)
 
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya3.PNG?raw=true)
+
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya4.PNG?raw=true)
+
 ![Capture de l'application](
 https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya5.PNG?raw=true )
+
 ![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya7.PNG?raw=true )
+
 ![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya6.PNG?raw=true )
+
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya8.PNG?raw=true )
+
 ![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya9.PNG?raw=true  )
+
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya10.PNG?raw=true )
+
 ![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya11.PNG?raw=true  )
+
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya12.PNG?raw=true)
+
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya13.PNG?raw=true )
+
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya14.PNG?raw=true)
+
 ![Capture de l'application]( 
 https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya16.PNG?raw=true)
+
 ![Capture de l'application]( )
 
 ## 🚀 Comment exécuter l'application
