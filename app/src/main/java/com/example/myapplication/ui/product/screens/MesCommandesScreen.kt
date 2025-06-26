@@ -1,26 +1,24 @@
 package com.example.myapplication.ui.product.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.myapplication.data.Entities.Order
-import com.example.myapplication.data.Entities.OrderItem
 import com.example.myapplication.data.Entities.Product
 import com.example.myapplication.utils.CartStorage
 import com.example.myapplication.utils.OrderStorage
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.clickable
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,10 +28,7 @@ fun MesCommandesScreen(
 ) {
     val context = LocalContext.current
 
-    // تحميل كل الطلبات
     val orders = remember { mutableStateListOf<Order>() }
-
-    // تحميل بيانات المنتجات (مثلاً من الكارت أو مصدر آخر)
     val allProducts = remember { mutableStateListOf<Product>().apply { addAll(CartStorage.loadCart(context)) } }
 
     LaunchedEffect(Unit) {
@@ -48,7 +43,7 @@ fun MesCommandesScreen(
                 navigationIcon = {
                     IconButton(onClick = { onBack() }) {
                         Icon(
-                            imageVector = androidx.compose.material.icons.Icons.Default.ArrowBack,
+                            imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Retour",
                             tint = Color(0xFFD81B60)
                         )
@@ -82,13 +77,33 @@ fun MesCommandesScreen(
                         elevation = CardDefaults.cardElevation(6.dp)
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("Commande du ${java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(order.timestamp)}",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = Color(0xFF880E4F)
-                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    "Commande du ${java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(order.timestamp)}",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = Color(0xFF880E4F)
+                                )
+                                IconButton(
+                                    onClick = {
+                                        // حذف الطلب من القائمة والتخزين
+                                        orders.remove(order)
+                                        OrderStorage.deleteOrder(context, order)
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Delete,
+                                        contentDescription = "Supprimer la commande",
+                                        tint = Color.Red
+                                    )
+                                }
+                            }
+
                             Spacer(modifier = Modifier.height(8.dp))
 
-                            // عرض المنتجات داخل الطلب
                             order.items.forEach { orderItem ->
                                 val product = allProducts.find { it.id == orderItem.productId }
                                 if (product != null) {

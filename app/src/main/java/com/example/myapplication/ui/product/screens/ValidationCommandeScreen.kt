@@ -25,15 +25,16 @@ data class ClientInfo(
     val telephone: String
 )
 
+data class PaymentMethod(val name: String, val iconRes: Int)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ValidationCommandeScreen(
     onBack: () -> Unit,
     onConfirmPayment: (clientInfo: ClientInfo, paymentMethod: String) -> Unit
 ) {
-    // 🎨 Couleurs
-    val RoseFonce = Color(0xFFD81B60)
-    val TexteFonce = Color(0xFF880E4F)
+    val roseFonce = Color(0xFFD81B60)
+    val texteFonce = Color(0xFF880E4F)
 
     var nom by remember { mutableStateOf("") }
     var adresse by remember { mutableStateOf("") }
@@ -52,118 +53,117 @@ fun ValidationCommandeScreen(
                 title = {
                     Text(
                         text = "Validation de la commande",
-                        color = RoseFonce,
+                        color = roseFonce,
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = { onBack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Retour", tint = RoseFonce)
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Retour",
+                            tint = roseFonce
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color.White
                 )
             )
-        },
-        content = { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(16.dp)
-                    .background(Color.White),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                OutlinedTextField(
-                    value = nom,
-                    onValueChange = { nom = it },
-                    label = { Text("Nom complet") },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp)
-                )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            OutlinedTextField(
+                value = nom,
+                onValueChange = { nom = it },
+                label = { Text("Nom complet") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp)
+            )
 
-                OutlinedTextField(
-                    value = adresse,
-                    onValueChange = { adresse = it },
-                    label = { Text("Adresse de livraison") },
-                    maxLines = 3,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp)
-                )
+            OutlinedTextField(
+                value = adresse,
+                onValueChange = { adresse = it },
+                label = { Text("Adresse de livraison") },
+                maxLines = 3,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp)
+            )
 
-                OutlinedTextField(
-                    value = telephone,
-                    onValueChange = { telephone = it },
-                    label = { Text("Téléphone") },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp)
-                )
+            OutlinedTextField(
+                value = telephone,
+                onValueChange = { telephone = it },
+                label = { Text("Téléphone") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp)
+            )
 
-                Text(
-                    text = "Méthode de paiement",
-                    color = TexteFonce,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 16.sp
-                )
+            Text(
+                text = "Méthode de paiement",
+                color = texteFonce,
+                fontWeight = FontWeight.Medium,
+                fontSize = 16.sp
+            )
 
-                // ✅ Section Paiement Stylée
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    paymentMethods.forEach { method ->
-                        val selected = method.name == selectedPaymentMethod
-                        Surface(
-                            shape = RoundedCornerShape(10.dp),
-                            color = if (selected) Color(0xFFF8BBD0) else Color(0xFFF5F5F5),
-                            shadowElevation = if (selected) 4.dp else 1.dp,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable { selectedPaymentMethod = method.name }
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                paymentMethods.forEach { method ->
+                    val selected = method.name == selectedPaymentMethod
+                    Surface(
+                        shape = RoundedCornerShape(10.dp),
+                        color = if (selected) Color(0xFFF8BBD0) else Color(0xFFF5F5F5),
+                        shadowElevation = if (selected) 4.dp else 1.dp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { selectedPaymentMethod = method.name }
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(12.dp)
                         ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.padding(12.dp)
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = method.iconRes),
-                                    contentDescription = method.name,
-                                    modifier = Modifier
-                                        .size(32.dp)
-                                        .clip(CircleShape),
-                                    tint = Color.Unspecified // conserve la couleur d’origine
-                                )
-                                Spacer(modifier = Modifier.width(12.dp))
-                                Text(
-                                    method.name,
-                                    fontSize = 16.sp,
-                                    fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
-                                    color = TexteFonce
-                                )
-                            }
+                            Icon(
+                                painter = painterResource(id = method.iconRes),
+                                contentDescription = method.name,
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clip(CircleShape),
+                                tint = Color.Unspecified
+                            )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Text(
+                                method.name,
+                                fontSize = 16.sp,
+                                fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
+                                color = texteFonce
+                            )
                         }
                     }
                 }
+            }
 
-                Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-                Button(
-                    onClick = {
-                        val clientInfo = ClientInfo(nom, adresse, telephone)
-                        onConfirmPayment(clientInfo, selectedPaymentMethod)
-                    },
-                    enabled = nom.isNotBlank() && adresse.isNotBlank() && telephone.isNotBlank(),
-                    colors = ButtonDefaults.buttonColors(containerColor = RoseFonce),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                ) {
-                    Text("Passer au paiement", color = Color.White, fontSize = 18.sp)
-                }
+            Button(
+                onClick = {
+                    val client = ClientInfo(nom, adresse, telephone)
+                    onConfirmPayment(client, selectedPaymentMethod)
+                },
+                enabled = nom.isNotBlank() && adresse.isNotBlank() && telephone.isNotBlank(),
+                colors = ButtonDefaults.buttonColors(containerColor = roseFonce),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            ) {
+                Text("Passer au paiement", color = Color.White, fontSize = 18.sp)
             }
         }
-    )
+    }
 }
-
-data class PaymentMethod(val name: String, val iconRes: Int)

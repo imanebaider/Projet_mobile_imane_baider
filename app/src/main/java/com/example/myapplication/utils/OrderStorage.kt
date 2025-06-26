@@ -42,4 +42,21 @@ object OrderStorage {
             emptyList()
         }
     }
+
+    fun deleteOrder(context: Context, orderToDelete: Order) {
+        val gson = Gson()
+        val file = File(context.filesDir, FILE_NAME)
+        if (file.exists()) {
+            val existingJson = file.readText()
+            val ordersList: MutableList<Order> = if (existingJson.isNotEmpty()) {
+                gson.fromJson(existingJson, Array<Order>::class.java).toMutableList()
+            } else {
+                mutableListOf()
+            }
+            // حذف الطلب حسب timestamp (ولا تبدلها بـ id إذا عندك)
+            ordersList.removeAll { it.timestamp == orderToDelete.timestamp }
+            file.writeText(gson.toJson(ordersList))
+        }
+    }
+
 }
