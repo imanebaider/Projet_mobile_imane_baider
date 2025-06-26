@@ -22,29 +22,54 @@ L'application Rüya offre une **expérience utilisateur fluide, moderne et élé
 
 ## 🎯 Objectifs du projet
 
-- ✅ Afficher une liste de produits (tasses à café)
-- ✅ Permettre la consultation des détails de chaque produit
-- ✅ Intégrer une navigation fluide entre les écrans
-- ✅ Ajouter une barre de navigation personnalisée (**MardinNavBar**)
-- ✅ Offrir une expérience utilisateur élégante, claire et intuitive
+- ✅ Afficher une liste de produits (tasses à café)  
+- ✅ Permettre la consultation des détails de chaque produit  
+- ✅ Intégrer une navigation fluide entre les écrans  
+- ✅ Ajouter une barre de navigation personnalisée (**MardinNavBar**)  
+- ✅ Offrir une expérience utilisateur élégante, claire et intuitive  
 
 ---
 
 ## 🛠️ Technologies utilisées
 
-- ⚙️ **Kotlin**
-- 🎨 **Jetpack Compose**
-- 🧠 **Architecture MVI (Model - View - Intent)**
-- 🔧 **Gradle**
+- ⚙️ **Kotlin**  
+- 🎨 **Jetpack Compose**  
+- 🧠 **Architecture MVI (Model - View - Intent)**  
+- 🔧 **Gradle**  
+
+---
+
+## 🧠 Architecture MVI
+
+J'ai utilisé l'architecture **MVI (Model-View-Intent)** pour assurer un **flux de données unidirectionnel** dans l'application.
+
+- Le **ViewModel** joue le rôle de **gestionnaire des intentions (Intents)** envoyées par la vue.
+- Il gère également **l'état de l'interface (State)** à l’aide de `MutableStateFlow`.
+
+🔄 **Fonctionnement du flux** :
+
+1. Lorsqu’un utilisateur effectue une action (par exemple : chargement des produits), une **intention** est envoyée au `ViewModel`.
+2. Le `ViewModel` appelle alors le **Repository** pour récupérer les données.
+3. Selon le résultat, il émet un **nouvel état** :
+   - `Loading` : chargement en cours  
+   - `Success` : données chargées avec succès  
+   - `Error` : erreur lors de la récupération  
+
+👁️ La **vue (UI)** observe uniquement cet **état** pour afficher le contenu approprié.
+
+✅ Ce modèle permet de structurer le code de manière :
+- claire  
+- prévisible  
+- facilement maintenable et extensible  
 
 ---
 
 ## 📸 Aperçu de l'application
 
-### 🛍️ Écran principal - Liste des produits
+### 🛍️ Écran principal – Liste des produits
 ![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya.PNG?raw=true)
 
-### 🔍 Écran de détails - Produit sélectionné
+### 🔍 Écran de détails – Produit sélectionné
 ![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya2.PNG?raw=true)
 
 ---
