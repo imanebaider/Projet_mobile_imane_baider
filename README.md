@@ -62,7 +62,7 @@ J'ai utilisé l'architecture **MVI (Model-View-Intent)** pour assurer un **flux 
 - prévisible  
 - facilement maintenable et extensible  
 
-![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya.PNG?raw=true)
+![Capture de l'application](https://raw.githubusercontent.com/imanebaider/Projet_mobile_imane_baider/refs/heads/main/mvi.webp)
 
 
 ## 📸 Aperçu de l'application
