@@ -98,10 +98,12 @@ https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya5.PNG?ra
 
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya14.PNG?raw=true)
 
+![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya15.PNG?raw=true)
+
 ![Capture de l'application]( 
 https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya16.PNG?raw=true)
 
-![Capture de l'application]( )
+
 
 ## 🚀 Comment exécuter l'application
 
