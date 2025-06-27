@@ -68,7 +68,9 @@ J'ai utilisé l'architecture **MVI (Model-View-Intent)** pour assurer un **flux 
 ## 📸 Aperçu de l'application
 
 ### 🛍️ Écran principal – Liste des produits
-Cette page représente l'écran d'accueil de l'application Rüya, un e-commerce dédié aux tasses à café. Elle est construite avec Jetpack Compose et suit une architecture moderne basée sur MVI. Elle permet aux utilisateurs de rechercher, visualiser et ajouter des produits à leur panier ou à leurs favoris. Une barre supérieure, un menu latéral personnalisable, une bannière d’accueil et une grille responsive de produits rendent l'expérience utilisateur agréable. Le code prend également en charge les interactions comme l’ajout au panier, la gestion des favoris et la navigation entre les différentes pages via un drawer. Le design suit une identité visuelle élégante aux tons roses et violets, ciblant principalement un public féminin.
+Cette page représente l'écran d'accueil de l'application Rüya, un e-commerce dédié aux tasses à café. Elle est construite avec Jetpack Compose et suit une architecture moderne basée sur MVI. Elle permet aux utilisateurs de rechercher, visualiser et ajouter des produits à leur panier ou à leurs favoris. Une barre supérieure, un menu latéral personnalisable, une bannière d’accueil et une grille responsive de produits rendent l'expérience utilisateur agréable. Le code prend également en charge les interactions comme l’ajout au panier, la gestion des favoris et la navigation entre les différentes pages via un drawer. Le design suit une identité visuelle élégante aux tons roses et violets, ciblant principalement un public féminin
+
+
 ![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya1.PNG?raw=true)
 
 ### 🔍 recherche un tasse
@@ -77,6 +79,7 @@ Cette page représente l'écran d'accueil de l'application Rüya, un e-commerce 
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya3.PNG?raw=true)
 ## Écran d’inscription – Création de compte Rüya
 Interface épurée permettant aux utilisateurs de créer un compte avec vérification du mot de passe
+
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya4.PNG?raw=true)
 ## Écran d'authentification – Connexion à l’application Rüya
 Interface élégante permettant aux utilisateurs de se connecter avec validation des champs
@@ -98,21 +101,21 @@ Affiche la liste des produits ajoutés aux favoris avec possibilité de consulte
 ## Gestion du panier
 Cette page affiche les produits ajoutés au panier avec leurs quantités. L’utilisateur peut sélectionner un ou plusieurs produits, ajuster les quantités, supprimer des articles, visualiser le total des articles sélectionnés, et passer la commande. L’interface offre un contrôle simple et intuitif pour gérer son panier avant la validation finale de la commande.
 ![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya11.PNG?raw=true  )
+
+![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya12.PNG?raw=true)
 ## Validation de la commande et choix du paiement
 
-Cette page permet à l'utilisateur de saisir ses informations personnelles (nom, adresse de livraison, téléphone) et de choisir une méthode de paiement parmi plusieurs options (carte bancaire, PayPal, paiement à la livraison). Le bouton de confirmation est activé uniquement lorsque tous les champs obligatoires sont remplis, facilitant ainsi la finalisation de la commande.
-![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya12.PNG?raw=true)
+Cette page permet à l'utilisateur de saisir ses informations personnelles (nom, adresse de livraison, téléphone) et de choisir une méthode de paiement parmi plusieurs options (carte bancaire, PayPal, paiement à la livraison). Le bouton de confirmation est activé uniquement lorsque tous les champs obligatoires sont remplis, facilitant ainsi la finalisation de la commande..
+![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya13.PNG?raw=true )
 ## Écran de paiement
 
-Cette page permet à l'utilisateur de saisir les informations de sa carte bancaire (numéro, nom du titulaire, date d'expiration, CVV) pour effectuer un paiement sécurisé. Une fois le paiement confirmé, un message de succès s'affiche avec la confirmation que la commande est en cours de traitement.
-![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya13.PNG?raw=true )
-
+Cette page permet à l'utilisateur de saisir les informations de sa carte bancaire (numéro, nom du titulaire, date d'expiration, CVV) pour effectuer un paiement sécurisé. Une fois le paiement confirmé, un message de succès s'affiche avec la confirmation que la commande est en cours de traitement
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya14.PNG?raw=true)
 
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya15.PNG?raw=true)
+
 ## gestion des commandes
 Cette page affiche toutes les commandes passées par l’utilisateur. Pour chaque commande, on voit la date, les détails des produits achetés avec la quantité et le prix unitaire, ainsi que le total par produit. Il est aussi possible de supprimer une commande de la liste.
-
 
 ![Capture de l'application]( 
 https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya16.PNG?raw=true)
