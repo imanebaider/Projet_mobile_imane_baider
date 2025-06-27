@@ -22,11 +22,19 @@ L'application Rüya offre une **expérience utilisateur fluide, moderne et élé
 
 ## 🎯 Objectifs du projet
 
-- ✅ Afficher une liste de produits (tasses à café)  
-- ✅ Permettre la consultation des détails de chaque produit  
-- ✅ Intégrer une navigation fluide entre les écrans  
-- ✅ Ajouter une barre de navigation personnalisée (**MardinNavBar**)  
-- ✅ Offrir une expérience utilisateur élégante, claire et intuitive  
+1 Afficher une liste attrayante et fonctionnelle de tasses à café.
+
+2 Permettre aux utilisateurs de consulter les détails complets de chaque produit.
+
+3 Offrir une navigation fluide et intuitive entre les différents écrans de l’application.
+
+4 Intégrer une barre de navigation personnalisée pour faciliter l’accès aux différentes sections.
+
+5 Permettre la gestion des favoris et du panier, avec ajout, suppression et modification des quantités.
+
+6 Fournir un processus de commande complet, incluant la validation des informations client et le choix sécurisé du mode de paiement.
+
+7 Assurer une expérience utilisateur élégante, claire et adaptée à un public féminin, grâce à un design soigné aux tons roses et violets
 
 ---
 
