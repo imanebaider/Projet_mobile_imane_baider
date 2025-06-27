@@ -4,15 +4,15 @@ Ce dépôt contient l'application mobile **Rüya**, une boutique en ligne spéci
 
 ---
 
-## 🏫 FACULTÉ POLYDISCIPLINAIRE À LARACHE  
-### 📚 Projet de Fin de Module Développement Mobile
+##  FACULTÉ POLYDISCIPLINAIRE À LARACHE  
+###  Projet de Fin de Module Développement Mobile
 
 - 👩‍💻 **Réalisé par :** BAIDER Imane  
-- 👨‍🏫 **Encadré par :** Pr. KOUISSI Mohamed  
+-  **Encadré par :** Pr. KOUISSI Mohamed  
 
 ---
 
-## 🌟 Présentation du projet
+##  Présentation du projet
 
 **Rüya** est un mot turc qui signifie **"le rêve"**.  
 L'idée derrière cette application est que chaque tasse de café vous transporte vers un **nouveau rêve**.  
@@ -20,7 +20,7 @@ L'application Rüya offre une **expérience utilisateur fluide, moderne et élé
 
 ---
 
-## 🎯 Objectifs du projet
+## Objectifs du projet
 
 1 Afficher une liste attrayante et fonctionnelle de tasses à café.
 
@@ -38,23 +38,23 @@ L'application Rüya offre une **expérience utilisateur fluide, moderne et élé
 
 ---
 
-## 🛠️ Technologies utilisées
+## Technologies utilisées
 
-- ⚙️ **Kotlin**  
-- 🎨 **Jetpack Compose**  
-- 🧠 **Architecture MVI (Model - View - Intent)**  
-- 🔧 **Gradle**  
+-  **Kotlin**  
+-  **Jetpack Compose**  
+-  **Architecture MVI (Model - View - Intent)**  
+-  **Gradle**  
 
 ---
 
-## 🧠 Architecture MVI
+##  Architecture MVI
 
 J'ai utilisé l'architecture **MVI (Model-View-Intent)** pour assurer un **flux de données unidirectionnel** dans l'application.
 
 - Le **ViewModel** joue le rôle de **gestionnaire des intentions (Intents)** envoyées par la vue.
 - Il gère également **l'état de l'interface (State)** à l’aide de `MutableStateFlow`.
 
-🔄 **Fonctionnement du flux** :
+ **Fonctionnement du flux** :
 
 1. Lorsqu’un utilisateur effectue une action (par exemple : chargement des produits), une **intention** est envoyée au `ViewModel`.
 2. Le `ViewModel` appelle alors le **Repository** pour récupérer les données.
@@ -63,9 +63,9 @@ J'ai utilisé l'architecture **MVI (Model-View-Intent)** pour assurer un **flux 
    - `Success` : données chargées avec succès  
    - `Error` : erreur lors de la récupération  
 
-👁️ La **vue (UI)** observe uniquement cet **état** pour afficher le contenu approprié.
+ La **vue (UI)** observe uniquement cet **état** pour afficher le contenu approprié.
 
-✅ Ce modèle permet de structurer le code de manière :
+ Ce modèle permet de structurer le code de manière :
 - claire  
 - prévisible  
 - facilement maintenable et extensible  
@@ -73,7 +73,7 @@ J'ai utilisé l'architecture **MVI (Model-View-Intent)** pour assurer un **flux 
 ![Capture de l'application](https://raw.githubusercontent.com/imanebaider/Projet_mobile_imane_baider/refs/heads/main/mvi.webp)
 
 
-## 📸 Aperçu de l'application
+## Aperçu de l'application
 
 ### 🛍️ Écran principal – Liste des produits
 Cette page représente l'écran d'accueil de l'application Rüya, un e-commerce dédié aux tasses à café. Elle est construite avec Jetpack Compose et suit une architecture moderne basée sur MVI. Elle permet aux utilisateurs de rechercher, visualiser et ajouter des produits à leur panier ou à leurs favoris. Une barre supérieure, un menu latéral personnalisable, une bannière d’accueil et une grille responsive de produits rendent l'expérience utilisateur agréable. Le code prend également en charge les interactions comme l’ajout au panier, la gestion des favoris et la navigation entre les différentes pages via un drawer. Le design suit une identité visuelle élégante aux tons roses et violets, ciblant principalement un public féminin
@@ -115,9 +115,11 @@ Cette page affiche les produits ajoutés au panier avec leurs quantités. L’ut
 
 Cette page permet à l'utilisateur de saisir ses informations personnelles (nom, adresse de livraison, téléphone) et de choisir une méthode de paiement parmi plusieurs options (carte bancaire, PayPal, paiement à la livraison). Le bouton de confirmation est activé uniquement lorsque tous les champs obligatoires sont remplis, facilitant ainsi la finalisation de la commande..
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya13.PNG?raw=true )
-## Écran de paiement
+
+ ## Écran de paiement
 
 Cette page permet à l'utilisateur de saisir les informations de sa carte bancaire (numéro, nom du titulaire, date d'expiration, CVV) pour effectuer un paiement sécurisé. Une fois le paiement confirmé, un message de succès s'affiche avec la confirmation que la commande est en cours de traitement
+
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya14.PNG?raw=true)
 
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya15.PNG?raw=true)
