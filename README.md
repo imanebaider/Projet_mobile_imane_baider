@@ -108,6 +108,7 @@ Affiche la liste des produits ajoutés aux favoris avec possibilité de consulte
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya10.PNG?raw=true )
 ## Gestion du panier
 Cette page affiche les produits ajoutés au panier avec leurs quantités. L’utilisateur peut sélectionner un ou plusieurs produits, ajuster les quantités, supprimer des articles, visualiser le total des articles sélectionnés, et passer la commande. L’interface offre un contrôle simple et intuitif pour gérer son panier avant la validation finale de la commande.
+
 ![Capture de l'application](https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya11.PNG?raw=true  )
 
 ![Capture de l'application]( https://github.com/imanebaider/Projet_mobile_imane_baider/blob/main/ruya12.PNG?raw=true)
